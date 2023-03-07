@@ -58,7 +58,7 @@
   
   <Container fluid>
     <Breadcrumbs title="Dashboards" breadcrumbItem="Dashboard" />
-    <Row>
+    <!-- <Row>
       <Col xl="4">
         <WelcomeComp />
         <MonthlyEarning />
@@ -126,6 +126,8 @@
         <TopCities />
       </Col>
     </Row>
+ -->
+
     <Row>
       <Col lg="12">
         <LatestTranaction />

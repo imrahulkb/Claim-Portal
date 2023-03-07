@@ -16,6 +16,7 @@
     orderId: "#SK2540",
     billingName: "Neal Matthews",
     orderdate: "07 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$400",
     badgeclass: "success",
     paymentStatus: "Paid",
@@ -27,6 +28,7 @@
     orderId: "#SK2541",
     billingName: "Jamal Burnett",
     orderdate: "07 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$380",
     badgeclass: "danger",
     paymentStatus: "Chargeback",
@@ -38,6 +40,7 @@
     orderId: "#SK2542",
     billingName: "Juan Mitchell",
     orderdate: "06 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$384",
     badgeclass: "success",
     paymentStatus: "Paid",
@@ -49,6 +52,7 @@
     orderId: "#SK2543",
     billingName: "Barry Dick",
     orderdate: "05 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$412",
     badgeclass: "success",
     paymentStatus: "Paid",
@@ -60,6 +64,7 @@
     orderId: "#SK2544",
     billingName: "Ronald Taylor",
     orderdate: "04 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$404",
     badgeclass: "warning",
     paymentStatus: "Refund",
@@ -71,6 +76,7 @@
     orderId: "#SK2545",
     billingName: "Jacob Hunter",
     orderdate: "04 Oct, 2019",
+    date2: "07 Oct, 2019",
     total: "$392",
     badgeclass: "success",
     paymentStatus: "Paid",
@@ -79,15 +85,22 @@
   },
 ];
 
-let modal = false;
+let showDetailsModal = false;
 
-const togglemodal = () => (modal = !modal);
+const toggledetails = () => (showDetailsModal = !showDetailsModal);
+
+let showUpdateStatusModal = false;
+
+const toggleUpdateStatus = () => (showUpdateStatusModal = !showUpdateStatusModal);
+
+let DetailsModal = Modal;
+let UpdateStatusModal = Modal;
 
 </script>
 
 <Card>
 <CardBody>
-  <div class="mb-4 h4 card-title">Latest Transaction</div>
+  <div class="mb-4 h4 card-title">Latest Claims</div>
   <div class="table-responsive">
     <table class="table align-middle table-nowrap mb-0">
         <thead class="table-light">
@@ -98,13 +111,15 @@ const togglemodal = () => (modal = !modal);
                         <label class="form-check-label" for="transactionCheck01"></label>
                     </div>
                 </th>
-                <th class="align-middle">Order ID</th>
-                <th class="align-middle">Billing Name</th>
-                <th class="align-middle">Date</th>
+                <th class="align-middle">Claim ID</th>
+                <th class="align-middle">Claimant Name</th>
+                <th class="align-middle">EventDate</th>
+                <th class="align-middle">Claim Date</th>
                 <th class="align-middle">Total</th>
                 <th class="align-middle">Payment Status</th>
                 <th class="align-middle">Payment Method</th>
                 <th class="align-middle">View Details</th>
+                <th class="align-middle">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -122,6 +137,9 @@ const togglemodal = () => (modal = !modal);
                   {order.orderdate}
                 </td>
                 <td>
+                  {order.date2}
+                </td>
+                <td>
                   {order.total}
                 </td>
                 <td>
@@ -132,9 +150,14 @@ const togglemodal = () => (modal = !modal);
                 </td>
                 <td>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" on:click={togglemodal}>
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" on:click={toggledetails}>
                         View Details
                     </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" on:click={toggleUpdateStatus}>
+                    Update Status
+                </button>
                 </td>
             </tr>
             {/each}
@@ -144,20 +167,20 @@ const togglemodal = () => (modal = !modal);
 </CardBody>
 </Card>
 
-<Modal
-  isOpen={modal}
+<DetailsModal
+  isOpen={showDetailsModal}
   role="dialog"
   autoFocus={true}
   data-toggle="modal"
   centered
-  on:click={togglemodal}
+  on:click={toggledetails}
 >
   <div class="modal-content border-bottom-0">
     <div class="modal-header"><h5 class="modal-title">Order Details</h5> 
       <button
         type="button"
         class="btn-close"
-        on:click={togglemodal}
+        on:click={toggledetails}
         data-bs-dismiss="modal"
         aria-label="Close"
       />
@@ -242,10 +265,58 @@ const togglemodal = () => (modal = !modal);
       <Button
         type="button"
         color="secondary"
-        on:click={togglemodal}
+        on:click={toggledetails}
       >
         Close
       </Button>
     </ModalFooter>
   </div>
-</Modal>
+</DetailsModal>
+
+<UpdateStatusModal
+  isOpen={showUpdateStatusModal}
+  role="dialog"
+  autoFocus={true}
+  data-toggle="modal"
+  centered
+  on:click={toggleUpdateStatus}
+>
+  <div class="modal-content border-bottom-0">
+    <div class="modal-header"><h5 class="modal-title">Update Status</h5> 
+      <button
+        type="button"
+        class="btn-close"
+        on:click={toggleUpdateStatus}
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      />
+    </div>
+    
+    <ModalBody>
+      <div class="mb-3">
+        <label for="formrow-firstname-input" class="form-label">Status</label>
+        <select class="form-select">
+          <option selected hidden >Open this select menu</option>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        type="button"
+        color="secondary"
+        on:click={toggleUpdateStatus}
+      >
+        Close
+      </Button>
+      <Button
+        type="button"
+        color="primary"
+      >
+        Save changes
+      </Button>
+    </ModalFooter>
+  </div>
+</UpdateStatusModal>
