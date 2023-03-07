@@ -286,13 +286,13 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   { path: "/login", component: Login },
-  { path: "/register", component: Register },
+  // { path: "/register", component: Register },
 
   { path: "/pages-maintenance", component: PagesMaintenance },
   { path: "/pages-comingsoon", component: PagesComingsoon },
   { path: "/pages-404", component: Pages404 },
   { path: "/pages-500", component: Pages500 },
-  { path: "/crypto-ico-landing", component: CryptoIcoLanding },
+  // { path: "/crypto-ico-landing", component: CryptoIcoLanding },
 
   // Authentication Inner
   { path: "/auth-login", component: Login1 },
