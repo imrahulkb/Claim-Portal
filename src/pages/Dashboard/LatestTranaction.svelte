@@ -13,81 +13,127 @@
   const orders = [
   {
     id: "1",
-    orderId: "#SK2540",
-    billingName: "Neal Matthews",
-    orderdate: "07 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$400",
+    claimId: "2540",
+    ClaimantName: "Neal Matthews",
+    ApplicationDate: "07 Oct, 2019",
+    EventName: "Event1",
+    EventDate: "07 Oct, 2019",
+    Total: "$400",
+    ClaimType: "Expense",
     badgeclass: "success",
     paymentStatus: "Paid",
-    methodIcon: "fa-cc-mastercard",
-    paymentMethod: "Mastercard",
+    particulars: [
+      {
+        id: "1",
+        item: "Food",
+        amount: "$120",
+        digitalReceipt: "https://www.google.com"
+      },
+      {
+        id: "2",
+        item: "Travel",
+        amount: "$80",
+        digitalReceipt: "https://www.google.com"
+      },
+      {
+        id: "3",
+        item: "Hotel",
+        amount: "$200",
+        digitalReceipt: "https://www.google.com"
+      },
+    ]
   },
   {
     id: "2",
-    orderId: "#SK2541",
-    billingName: "Jamal Burnett",
-    orderdate: "07 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$380",
+    claimId: "2541",
+    ClaimantName: "Jamal Burnett",
+    ApplicationDate: "07 Oct, 2019",
+    EventName: "Event2",
+    EventDate: "07 Oct, 2019",
+    Total: "$380",
+    ClaimType: "Expense",
     badgeclass: "danger",
-    paymentStatus: "Chargeback",
-    methodIcon: "fa-cc-visa",
-    paymentMethod: "Visa",
+    paymentStatus: "Rejected",
+    particulars: [
+      {
+        id: "1",
+        particulars: "Books",
+        amount: "$50",
+        digitalReceipt: "https://www.google.com"
+      },
+      {
+        id: "2",
+        particulars: "Stationary",
+        amount: "$30",
+        digitalReceipt: "https://www.google.com"
+      },
+      {
+        id: "3",
+        particulars: "Snacks",
+        amount: "$100",
+        digitalReceipt: "https://www.google.com"
+      },
+    ]
   },
   {
     id: "3",
-    orderId: "#SK2542",
-    billingName: "Juan Mitchell",
-    orderdate: "06 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$384",
+    claimId: "2542",
+    ClaimantName: "Juan Mitchell",
+    ApplicationDate: "06 Oct, 2019",
+    EventName: "Event3",
+    EventDate: "07 Oct, 2019",
+    Total: "$384",
+    ClaimType: "Expense",
     badgeclass: "success",
     paymentStatus: "Paid",
-    methodIcon: "fa-cc-paypal",
-    paymentMethod: "Paypal",
   },
   {
     id: "4",
-    orderId: "#SK2543",
-    billingName: "Barry Dick",
-    orderdate: "05 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$412",
+    claimId: "2543",
+    ClaimantName: "Barry Dick",
+    ApplicationDate: "05 Oct, 2019",
+    EventDate: "07 Oct, 2019",
+    Total: "$412",
+    ClaimType: "Expense",
     badgeclass: "success",
     paymentStatus: "Paid",
-    methodIcon: "fa-cc-mastercard",
-    paymentMethod: "Mastercard",
+    EventName: "Event4"
   },
   {
     id: "5",
-    orderId: "#SK2544",
-    billingName: "Ronald Taylor",
-    orderdate: "04 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$404",
+    claimId: "2544",
+    ClaimantName: "Ronald Taylor",
+    ApplicationDate: "04 Oct, 2019",
+    EventDate: "07 Oct, 2019",
+    Total: "$404",
+    ClaimType: "Expense",
     badgeclass: "warning",
-    paymentStatus: "Refund",
-    methodIcon: "fa-cc-visa",
-    paymentMethod: "Visa",
+    paymentStatus: "Pending",
+    EventName: "Event5"
   },
   {
     id: "6",
-    orderId: "#SK2545",
-    billingName: "Jacob Hunter",
-    orderdate: "04 Oct, 2019",
-    date2: "07 Oct, 2019",
-    total: "$392",
+    claimId: "2545",
+    ClaimantName: "Jacob Hunter",
+    ApplicationDate: "04 Oct, 2019",
+    EventDate: "07 Oct, 2019",
+    Total: "$392",
+    ClaimType: "Expense",
     badgeclass: "success",
     paymentStatus: "Paid",
-    methodIcon: "fa-cc-paypal",
-    paymentMethod: "Paypal",
+    EventName: "Event6"
   },
 ];
 
+let selectedOrder = null;
+
 let showDetailsModal = false;
 
-const toggledetails = () => (showDetailsModal = !showDetailsModal);
+const hidedetails = () => (showDetailsModal = false);
+const showdetails = (orderId) => {
+  showDetailsModal = true;
+  selectedOrder = orders.find((order) => order.id === orderId);
+};
 
 let showUpdateStatusModal = false;
 
@@ -113,11 +159,11 @@ let UpdateStatusModal = Modal;
                 </th>
                 <th class="align-middle">Claim ID</th>
                 <th class="align-middle">Claimant Name</th>
+                <th class="align-middle">Application Date</th>
+                <th class="align-middle">Event Name</th>
                 <th class="align-middle">EventDate</th>
-                <th class="align-middle">Claim Date</th>
                 <th class="align-middle">Total</th>
                 <th class="align-middle">Payment Status</th>
-                <th class="align-middle">Payment Method</th>
                 <th class="align-middle">View Details</th>
                 <th class="align-middle">Action</th>
             </tr>
@@ -131,26 +177,26 @@ let UpdateStatusModal = Modal;
                         <label class="form-check-label" for="transactionCheck02"></label>
                     </div>
                 </td>
-                <td><a href="/" class="text-body fw-bold">{order.orderId}</a> </td>
-                <td>{order.billingName}</td>
+                <td><a href="/" class="text-body fw-bold">{order.claimId}</a> </td>
+                <td>{order.ClaimantName}</td>
                 <td>
-                  {order.orderdate}
+                  {order.ApplicationDate}
                 </td>
                 <td>
-                  {order.date2}
+                  {order.EventName}
                 </td>
                 <td>
-                  {order.total}
+                  {order.EventDate}
+                </td>
+                <td>
+                  {order.Total}
                 </td>
                 <td>
                     <span class={"badge badge-pill badge-soft-" + order.badgeclass + " font-size-11"}>{order.paymentStatus}</span>
                 </td>
                 <td>
-                    <i class={ "fab " + order.methodIcon + " me-1" }></i> {order.paymentMethod}
-                </td>
-                <td>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" on:click={toggledetails}>
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" on:click={() => showdetails(order.id)}>
                         View Details
                     </button>
                 </td>
@@ -171,16 +217,16 @@ let UpdateStatusModal = Modal;
   isOpen={showDetailsModal}
   role="dialog"
   autoFocus={true}
-  data-toggle="modal"
   centered
-  on:click={toggledetails}
->
+  on:click={hidedetails}
+  data-toggle="modal"
+  >
   <div class="modal-content border-bottom-0">
-    <div class="modal-header"><h5 class="modal-title">Order Details</h5> 
+    <div class="modal-header"><h5 class="modal-title">Claim Details</h5> 
       <button
         type="button"
         class="btn-close"
-        on:click={toggledetails}
+        on:click={hidedetails}
         data-bs-dismiss="modal"
         aria-label="Close"
       />
@@ -188,75 +234,32 @@ let UpdateStatusModal = Modal;
     
     <ModalBody>
       <p class="mb-2">
-        Product id: <span class="text-primary">#SK2540</span>
+        Claim id: <span class="text-primary">{selectedOrder.claimId}</span>
       </p>
       <p class="mb-4">
-        Billing Name:{" "}
-        <span class="text-primary">Neal Matthews</span>
+        Claimant Name:{" "}
+        <span class="text-primary">{selectedOrder.ClaimantName}</span>
       </p>
 
       <div class="table-responsive">
         <Table class="table align-middle table-nowrap">
           <thead>
             <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Product Name</th>
-              <th scope="col">Price</th>
+              <th scope="col">Serial No.</th>
+              <th scope="col">Item</th>
+              <th scope="col">Amount</th>
+              <th scope="col">digitalReceipt</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-                <th scope="row">
-                    <div>
-                        <img src="/assets/images/product/img-7.png" alt="" class="avatar-sm">
-                    </div>
-                </th>
-                <td>
-                    <div>
-                        <h5 class="text-truncate font-size-14">Wireless Headphone (Black)</h5>
-                        <p class="text-muted mb-0">$ 225 x 1</p>
-                    </div>
-                </td>
-                <td>$ 255</td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    <div>
-                        <img src="/assets/images/product/img-4.png" alt="" class="avatar-sm">
-                    </div>
-                </th>
-                <td>
-                    <div>
-                        <h5 class="text-truncate font-size-14">Phone patterned cases</h5>
-                        <p class="text-muted mb-0">$ 145 x 1</p>
-                    </div>
-                </td>
-                <td>$ 145</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h6 class="m-0 text-right">Sub Total:</h6>
-                </td>
-                <td>
-                    $ 400
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h6 class="m-0 text-right">Shipping:</h6>
-                </td>
-                <td>
-                    Free
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h6 class="m-0 text-right">Total:</h6>
-                </td>
-                <td>
-                    $ 400
-                </td>
-            </tr>
+            {#each selectedOrder.particulars as particulars}
+              <tr>
+                <th scope="row">{particulars.id}</th>
+                <td>{particulars.item}</td>
+                <td>{particulars.amount}</td>
+                <td><a href="{particulars.digitalReceipt}">View Doc</a></td>
+              </tr>
+            {/each}
         </tbody>
         </Table>
       </div>
@@ -265,7 +268,7 @@ let UpdateStatusModal = Modal;
       <Button
         type="button"
         color="secondary"
-        on:click={toggledetails}
+        on:click={hidedetails}
       >
         Close
       </Button>
