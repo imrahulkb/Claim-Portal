@@ -9,7 +9,7 @@
 
 <div id="layout-wrapper">
   <Header bind:sidebar={open} />
-  <Navbar />
+  <!-- <Navbar /> -->
   <div class="main-content" id="maincontent">
     <slot />
   </div>
