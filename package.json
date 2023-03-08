@@ -1,0 +1,17 @@
+{
+  "name": "ieee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backend": "npm run start --prefix backend",
+    "Frontend": "npm run dev --prefix Frontend",
+    "app": "concurrently \"npm run Frontend\" \"npm run backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
