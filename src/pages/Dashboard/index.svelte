@@ -46,11 +46,11 @@
     },
   ];
 
-  onMount(() => {
-    setTimeout(() => {
-      subscribemodal = true;
-    }, 2000);
-  });
+  // onMount(() => {
+  //   setTimeout(() => {
+  //     subscribemodal = true;
+  //   }, 2000);
+  // });
   
 </script>
 

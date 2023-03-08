@@ -233,22 +233,94 @@ let UpdateStatusModal = Modal;
     </div>
     
     <ModalBody>
-      <p class="mb-2">
-        Claim id: <span class="text-primary">{selectedOrder.claimId}</span>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+      <p class="">
+        Claim ID: <span class="text-primary">{selectedOrder.claimId}</span>
       </p>
-      <p class="mb-4">
-        Claimant Name:{" "}
-        <span class="text-primary">{selectedOrder.ClaimantName}</span>
+      </div>
+      <div class="col-sm">
+      <p class="">
+        Application Date:{" "}
+        <span class="text-primary">{selectedOrder.ApplicationDate}</span>
       </p>
-
+      </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+      <p>
+      Claimant Name:{" "}
+      <span class="text-primary">{selectedOrder.ClaimantName}</span>
+      </p>
+      </div>
+      <div class="col-sm">
+      <p class="">
+        Claim Type:{" "}
+        <span class="text-primary">{selectedOrder.ClaimType}</span>
+      </p>
+      </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+      <p class="">
+        Event Name:{" "}
+        <span class="text-primary">{selectedOrder.EventName}</span>
+      </p>
+      </div>
+      <div class="col-sm">
+      <p class="">
+        Event Date:{" "}
+        <span class="text-primary">{selectedOrder.EventDate}</span>
+      </p>
+      </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+      <p class="">
+        Amount:{" "}
+        <span class="text-primary">{selectedOrder.Total}</span>
+      </p>
+      </div>
+      <div class="col-sm">
+      <p>
+        <div class="container">
+          <div class="row">
+            <div class="col-4">
+              <p>
+        <label for="formrow-firstname-input" class="form-label">Status</label>
+        </p>
+        </div>
+        <div class="col-sm">
+        <select class="form-select">
+          <option selected hidden >Select</option>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+        </div>
+        </div>
+        </div>
+      <!-- </p> -->
+      </div>
+      </div>
+      </div>
+       <!-- <h4>Expense Details</h4> -->
+       <div class="mb-2 h4 card-title">Expense Details</div>
       <div class="table-responsive">
         <Table class="table align-middle table-nowrap">
           <thead>
             <tr>
               <th scope="col">Serial No.</th>
-              <th scope="col">Item</th>
+              <th scope="col">Particulars</th>
               <th scope="col">Amount</th>
-              <th scope="col">digitalReceipt</th>
+              <th scope="col">Digital Receipt</th>
             </tr>
           </thead>
           <tbody>
