@@ -1,7 +1,4 @@
-import Chat from "../pages/Chat/Chat.svelte";
-
-// FileManager
-import FileManager from "../pages/FileManager/index.svelte";
+import ClaimPortal from "../pages/ClaimPortal/index.svelte"
 
 // Pages Calendar
 import Calendar from "../pages/Calendar/index.svelte";
@@ -39,7 +36,6 @@ import InvoiceDetail from "../pages/Invoices/invoices-detail.svelte";
 
 // Authentication related pages
 import Login from "../pages/Authentication/Login.svelte";
-import Register from "../pages/Authentication/Register.svelte";
 
 // Inner Authentication
 import Login1 from "../pages/AuthenticationInner/Login.svelte";
@@ -153,14 +149,15 @@ import CandidateList from "../pages/JobPages/CandidateList.svelte";
 import CandidateOverview from "../pages/JobPages/CandidateOverview.svelte";
 
 const authProtectedRoutes = [
-  { path: "/", component: Dashboard },
-  { path: "/index", component: Dashboard },
   { path: "/dashboard", component: Dashboard },
  
 ];
 
 const publicRoutes = [
   { path: "/login", component: Login },
+  { path: "/", component: ClaimPortal },
+  { path: "/index", component: ClaimPortal },
+
   // { path: "/register", component: Register },
 
   { path: "/pages-maintenance", component: PagesMaintenance },
