@@ -39,67 +39,114 @@
 
   $: totalAmount = calculateTotal() - lessAdvanceExpense;
   </script>
-  
+ 
   <div class="container">
+    <h1>Claimant Details</h1>
     <form>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
       <div class="form-group">
         <label for="nameInput">Name</label>
         <input type="text" class="form-control" id="nameInput" style="max-width: 300px" bind:value={name} />
       </div>
+      </div>
+      <div class="col-sm">
       <div class="form-group">
         <label for="emailInput">Email address</label>
         <input type="email" class="form-control" id="emailInput" style="max-width: 300px" bind:value={email} />
       </div>
+      </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
       <div class="form-group">
         <label for="phoneInput">Phone Number</label>
         <input type="tel" class="form-control" id="phoneInput" style="max-width: 300px" bind:value={phoneNumber} />
       </div>
+      </div>
+      <div class="col-sm">
       <div class="form-group">
-        <label for="ieeemembershipInput">Phone Number</label>
+        <label for="ieeemembershipInput">IEEE Membership No.</label>
         <input type="number" class="form-control" id="ieeemembershipInput" style="max-width: 300px" bind:value={ieeeMembership} />
       </div>
+      </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
       <label for="subjectSelect">What is the subject you are claiming for?</label>
       <select class="form-select" id="subjectSelect" style="max-width: 300px" bind:value={subject}>
         {#each subjects as option}
           <option value={option}>{option}</option>
         {/each}
       </select>
+          </div>
+          <div class="col-sm">
       <div class="container">
         <div class="form-group">
           <label for="bankNameInput">Bank Name</label>
           <input type="text" class="form-control" id="bankNameInput" style="max-width: 300px" bind:value={bankName} />
         </div>
+        </div>
+        </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
         <div class="form-group">
           <label for="branchNameInput">Branch Name</label>
           <input type="text" class="form-control" id="branchNameInput" style="max-width: 300px" bind:value={branchName} />
         </div>
+        </div>
+        <div class="col-sm">
         <div class="form-group">
           <label for="ifscCodeInput">IFSC Code</label>
           <input type="text" class="form-control" id="ifscCodeInput" style="max-width: 300px" bind:value={ifscCode} />
         </div>
+        </div>
+        </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
         <div class="form-group">
           <label for="accountNumberInput">Account Number</label>
           <input type="text" class="form-control" id="accountNumberInput" style="max-width: 300px" bind:value={accountNumber} />
         </div>
+        </div>
+        <div class="col-sm">
         <div class="form-group">
           <label for="accountNameInput">Account Name</label>
           <input type="text" class="form-control" id="accountNameInput" style="max-width: 300px" bind:value={accountName} />
         </div>
+        </div>
+        </div>
+        </div>
       </div>
 
       <h2>Event Details</h2>
-
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
 <div class="form-group">
   <label for="eventNameInput">Event Name</label>
   <input type="text" class="form-control" id="eventNameInput" bind:value={eventName} />
 </div>
-
+</div>
+<div class="col-sm">
 <div class="form-group">
   <label for="eventDateInput">Event Date</label>
   <input type="date" class="form-control" id="eventDateInput" bind:value={eventDate} />
 </div>
+</div>
+</div>
+</div>
 
-<h3>Expenses</h3>
+<h2>Expenses</h2>
 
 <table class="table">
   <thead>
@@ -128,15 +175,21 @@
     </tr>
   </tfoot>
 </table>
-
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
 <div class="form-group">
   <label for="lessAdvanceExpenseInput">Less Advance Expense</label>
   <input type="number" class="form-control" id="lessAdvanceExpenseInput" bind:value={lessAdvanceExpense} />
 </div>
-
+</div>
+<div class="col-sm">
 <div class="form-group">
   <label for="grossAmountInput">Gross Amount</label>
   <input type="number" class="form-control" id="grossAmountInput" value={totalAmount} readonly />
+</div>
+</div>
+</div>
 </div>
       <button type="submit" class="btn btn-primary" style="margin-top: 30px;">Submit</button>
     </form>
