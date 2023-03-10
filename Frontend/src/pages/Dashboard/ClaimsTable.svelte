@@ -5,128 +5,14 @@
     Card,
     CardBody,
     Modal,
-    ModalHeader,
     ModalBody,
     ModalFooter,
     Table,
     Button,
   } from "sveltestrap";
 
-  const orders = [
-    {
-      id: "1",
-      claimId: "2540",
-      ClaimantName: "Neal Matthews",
-      ApplicationDate: "07 Oct, 2019",
-      EventName: "Event1",
-      EventDate: "07 Oct, 2019",
-      Total: "$400",
-      ClaimType: "Expense",
-      badgeclass: "success",
-      paymentStatus: "Paid",
-      particulars: [
-        {
-          id: "1",
-          item: "Food",
-          amount: "$120",
-          digitalReceipt: "https://www.google.com",
-        },
-        {
-          id: "2",
-          item: "Travel",
-          amount: "$80",
-          digitalReceipt: "https://www.google.com",
-        },
-        {
-          id: "3",
-          item: "Hotel",
-          amount: "$200",
-          digitalReceipt: "https://www.google.com",
-        },
-      ],
-    },
-    {
-      id: "2",
-      claimId: "2541",
-      ClaimantName: "Jamal Burnett",
-      ApplicationDate: "07 Oct, 2019",
-      EventName: "Event2",
-      EventDate: "07 Oct, 2019",
-      Total: "$380",
-      ClaimType: "Expense",
-      badgeclass: "danger",
-      paymentStatus: "Rejected",
-      particulars: [
-        {
-          id: "1",
-          particulars: "Books",
-          amount: "$50",
-          digitalReceipt: "https://www.google.com",
-        },
-        {
-          id: "2",
-          particulars: "Stationary",
-          amount: "$30",
-          digitalReceipt: "https://www.google.com",
-        },
-        {
-          id: "3",
-          particulars: "Snacks",
-          amount: "$100",
-          digitalReceipt: "https://www.google.com",
-        },
-      ],
-    },
-    {
-      id: "3",
-      claimId: "2542",
-      ClaimantName: "Juan Mitchell",
-      ApplicationDate: "06 Oct, 2019",
-      EventName: "Event3",
-      EventDate: "07 Oct, 2019",
-      Total: "$384",
-      ClaimType: "Expense",
-      badgeclass: "success",
-      paymentStatus: "Paid",
-    },
-    {
-      id: "4",
-      claimId: "2543",
-      ClaimantName: "Barry Dick",
-      ApplicationDate: "05 Oct, 2019",
-      EventDate: "07 Oct, 2019",
-      Total: "$412",
-      ClaimType: "Expense",
-      badgeclass: "success",
-      paymentStatus: "Paid",
-      EventName: "Event4",
-    },
-    {
-      id: "5",
-      claimId: "2544",
-      ClaimantName: "Ronald Taylor",
-      ApplicationDate: "04 Oct, 2019",
-      EventDate: "07 Oct, 2019",
-      Total: "$404",
-      ClaimType: "Expense",
-      badgeclass: "warning",
-      paymentStatus: "Pending",
-      EventName: "Event5",
-    },
-    {
-      id: "6",
-      claimId: "2545",
-      ClaimantName: "Jacob Hunter",
-      ApplicationDate: "04 Oct, 2019",
-      EventDate: "07 Oct, 2019",
-      Total: "$392",
-      ClaimType: "Expense",
-      badgeclass: "success",
-      paymentStatus: "Paid",
-      EventName: "Event6",
-    },
-  ];
-
+  import { orders } from "../../common/data/orders";
+  
   let selectedOrder = null;
 
   let showDetailsModal = false;
@@ -142,13 +28,34 @@
   const toggleUpdateStatus = () =>
     (showUpdateStatusModal = !showUpdateStatusModal);
 
+  let selectedOrders = [];
+  let selectAll = false;
+
+  const toggleSelectAll = () => {
+    selectAll = !selectAll;
+    if (selectAll) {
+      selectedOrders = orders.map((order) => order.id);
+    } else {
+      selectedOrders = [];
+    }
+  };
+
+  const toggleSelectOrder = (orderId) => {
+    if (selectedOrders.includes(orderId)) {
+      selectedOrders = selectedOrders.filter((id) => id !== orderId);
+      selectAll = false;
+    } else {
+      selectedOrders.push(orderId);
+    }
+  };
+
   let DetailsModal = Modal;
   let UpdateStatusModal = Modal;
 </script>
 
 <Card>
   <CardBody>
-    <div class="mb-4 h1 card-title">Latest Claims</div>
+    <div class="mb-4 h2">Latest Claims</div>
     <div class="table-responsive">
       <table class="table align-middle table-nowrap mb-0">
         <thead class="table-light">
@@ -159,6 +66,8 @@
                   class="form-check-input"
                   type="checkbox"
                   id="transactionCheck01"
+                  checked={selectAll}
+                  on:input={toggleSelectAll}
                 />
                 <label class="form-check-label" for="transactionCheck01" />
               </div>
@@ -183,6 +92,8 @@
                     class="form-check-input"
                     type="checkbox"
                     id="transactionCheck02"
+                    checked={selectedOrders.includes(order.id)}
+                    on:input={() => toggleSelectOrder(order.id)}
                   />
                   <label class="form-check-label" for="transactionCheck02" />
                 </div>
