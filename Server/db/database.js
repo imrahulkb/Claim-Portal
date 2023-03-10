@@ -5,7 +5,7 @@ const pool = createPool({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "lox",
   password: process.env.DB_PASS || "12345678",
-  database: process.env.MYSQL_DB || "claims",
+  database: process.env.DB_NAME || "claims",
   connectionLimit: 10
 })
 
