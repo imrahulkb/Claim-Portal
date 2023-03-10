@@ -33,8 +33,7 @@ app.post('/claim', (req, res) => {
   const { claim, expenses } = req.body;
   claim.totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0) - claim.lessAdvanceExpense;
   claim.status = claim_status.pending;
-  console.log(claim);
-  console.log(expenses);
+  addClaim(claim, expenses);
   res.send('Claim added');
 });
 
