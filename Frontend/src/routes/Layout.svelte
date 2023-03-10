@@ -2,7 +2,7 @@
   import HorizontalLayout from "../routes/HorizontalLayout/Index.svelte";
   import VerticalLayout from "../routes/VerticalLayout/Index.svelte";
 
-  let layoutType = "vertical";
+  let layoutType = "horizontal";
 
   let component = layoutType == "vertical" ? VerticalLayout : HorizontalLayout;
 
