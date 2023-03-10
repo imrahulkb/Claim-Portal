@@ -98,7 +98,7 @@
 </script>
 
 <div class="container">
-  <h1>Claimant Details</h1>
+  <center><h1>Claimant Details</h1></center>
   <form on:submit|preventDefault={handleSubmit}>
     <div class="container">
       <div class="row">
@@ -155,21 +155,22 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <label for="subjectSelect">
+          <div class="form-group">
+            <label for="subjectSelect">
             What is the subject you are claiming for?
-          </label>
-          <select
-            class="form-select"
-            id="subjectSelect"
-            style="max-width: 300px"
-            bind:value={claimType}>
-            {#each claimTypes as option}
+            </label>
+            <select
+              class="form-select"
+              id="subjectSelect"
+              style="max-width: 300px"
+              bind:value={claimType}>
+              {#each claimTypes as option}
               <option value={option}>{option}</option>
-            {/each}
-          </select>
+              {/each}
+            </select>
+          </div>
         </div>
         <div class="col-sm">
-          <div class="container">
             <div class="form-group">
               <label for="bankNameInput">Bank Name</label>
               <input
@@ -179,63 +180,60 @@
                 style="max-width: 300px"
                 bind:value={bankName} />
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <div class="form-group">
-              <label for="branchNameInput">Branch Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="branchNameInput"
-                style="max-width: 300px"
-                bind:value={branchName} />
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="form-group">
-              <label for="ifscCodeInput">IFSC Code</label>
-              <input
-                type="text"
-                class="form-control"
-                id="ifscCodeInput"
-                style="max-width: 300px"
-                bind:value={ifscCode} />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <div class="form-group">
-              <label for="accountNumberInput">Account Number</label>
-              <input
-                type="text"
-                class="form-control"
-                id="accountNumberInput"
-                style="max-width: 300px"
-                bind:value={accountNumber} />
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="form-group">
-              <label for="accountNameInput">Account Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="accountNameInput"
-                style="max-width: 300px"
-                bind:value={accountName} />
-            </div>
-          </div>
         </div>
       </div>
     </div>
-
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="accountNumberInput">Account Number</label>
+             <input
+               type="text"
+               class="form-control"
+               id="accountNumberInput"
+               style="max-width: 300px"
+               bind:value={accountNumber} />
+          </div>
+        </div>
+        <div class="col-sm">
+         <div class="form-group">
+          <label for="accountNameInput">Account Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="accountNameInput"
+            style="max-width: 300px"
+            bind:value={accountName} />
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="branchNameInput">Branch Name</label>
+             <input
+               type="text"
+               class="form-control"
+               id="branchNameInput"
+               style="max-width: 300px"
+               bind:value={branchName} />
+          </div>
+        </div>
+        <div class="col-sm">
+         <div class="form-group">
+             <label for="ifscCodeInput">IFSC Code</label>
+             <input
+               type="text"
+               class="form-control"
+               id="ifscCodeInput"
+               style="max-width: 300px"
+               bind:value={ifscCode} />
+        </div>
+      </div>
+    </div>
     <h2>Event Details</h2>
     <div class="container">
       <div class="row">
