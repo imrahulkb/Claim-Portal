@@ -43,6 +43,7 @@
     expenses.reduce((acc, curr) => acc + curr.amount, 0) - lessAdvanceExpense;
 
   function getURL(expense) {
+    //TODO: uncomment this when backend is ready
     // const formData = new FormData();
     // formData.append("file", expense.document[0]);
     // return fetch("api/upload", {
@@ -52,42 +53,46 @@
     //   .then((res) => {
     //     expense.url = res.url;
     //   });
-    return "dummy"
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        expense.url = "https://www.google.com";
+        resolve();
+      }, 30);
+    });
   }
 
-
   async function handleSubmit() {
-    await Promise.all(expenses.map(getURL));
-
-    fetch("api/claim", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        claim: {
-          name,
-          email,
-          phone,
-          ieeeMembership,
-          claim_type,
-          bankName,
-          branchName,
-          ifscCode,
-          accountNumber,
-          accountName,
-          eventName,
-          eventDate,
-          lessAdvanceExpense,
+    Promise.all(expenses.map(getURL)).then(() => {
+      fetch("api/claim", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        expenses: expenses.map((expense) => {
-          return {
-            item: expense.item,
-            amount: expense.amount,
-            url: expense.url,
-          };
+        body: JSON.stringify({
+          claim: {
+            name,
+            email,
+            phone,
+            ieeeMembership,
+            claimType,
+            bankName,
+            branchName,
+            ifscCode,
+            accountNumber,
+            accountName,
+            eventName,
+            eventDate,
+            lessAdvanceExpense,
+          },
+          expenses: expenses.map((expense) => {
+            return {
+              item: expense.item,
+              amount: expense.amount,
+              doc_url: expense.url,
+            };
+          }),
         }),
-      }),
+      });
     });
   }
 </script>

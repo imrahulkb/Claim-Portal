@@ -1,4 +1,4 @@
-USE DATABASE claims;
+USE claims;
 
 CREATE TABLE claim (
   id int NOT NULL AUTO_INCREMENT,

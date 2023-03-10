@@ -11,16 +11,47 @@
     Button,
   } from "sveltestrap";
 
-  import { orders } from "../../common/data/orders";
-  
+  let orders = [];
+
+  fetch("api/claims")
+    .then((res) => res.json())
+    .then((res) => {
+      orders = res;
+      orders.forEach((order) => {
+        order.expenses = [];
+      });
+    });
+
+  $: console.log(orders);
+
+  const badgeclass = (status) => {
+    switch (status) {
+      case "Pending":
+        return "warning";
+      case "Approved":
+        return "success";
+      case "Rejected":
+        return "danger";
+      default:
+        return "primary";
+    }
+  };
+
   let selectedOrder = null;
 
   let showDetailsModal = false;
 
   const hidedetails = () => (showDetailsModal = false);
+
   const showdetails = (orderId) => {
-    showDetailsModal = true;
-    selectedOrder = orders.find((order) => order.id === orderId);
+    fetch("api/expenses/" + orderId)
+      .then((res) => res.json())
+      .then((res) => {
+        let order = orders.find((o) => o.id === orderId);
+        order.expenses = res;
+        selectedOrder = order;
+        showDetailsModal = true;
+      });
   };
 
   let showUpdateStatusModal = false;
@@ -49,6 +80,8 @@
     }
   };
 
+  const claim_status = ["pending", "approved", "rejected"];
+
   let DetailsModal = Modal;
   let UpdateStatusModal = Modal;
 </script>
@@ -67,8 +100,7 @@
                   type="checkbox"
                   id="transactionCheck01"
                   checked={selectAll}
-                  on:input={toggleSelectAll}
-                />
+                  on:input={toggleSelectAll} />
                 <label class="form-check-label" for="transactionCheck01" />
               </div>
             </th>
@@ -93,41 +125,36 @@
                     type="checkbox"
                     id="transactionCheck02"
                     checked={selectedOrders.includes(order.id)}
-                    on:input={() => toggleSelectOrder(order.id)}
-                  />
+                    on:input={() => toggleSelectOrder(order.id)} />
                   <label class="form-check-label" for="transactionCheck02" />
                 </div>
               </td>
-              <td
-                ><a href="/" class="text-body fw-bold">{order.claimId}</a>
-              </td>
-              <td>{order.ClaimantName}</td>
+              <td><a href="/" class="text-body fw-bold">{order.id}</a> </td>
+              <td>{order.name}</td>
               <td>
-                {order.ApplicationDate}
+                {order.applicationDate}
               </td>
               <td>
-                {order.EventName}
+                {order.eventName}
               </td>
               <td>
-                {order.EventDate}
+                {order.eventDate}
               </td>
               <td>
-                {order.Total}
+                {order.totalExpense}
               </td>
               <td>
                 <span
                   class={"badge badge-pill badge-soft-" +
-                    order.badgeclass +
-                    " font-size-11"}>{order.paymentStatus}</span
-                >
+                    badgeclass(order.status) +
+                    " font-size-11"}>{order.status}</span>
               </td>
               <td>
                 <!-- Button trigger modal -->
                 <button
                   type="button"
                   class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
-                  on:click={() => showdetails(order.id)}
-                >
+                  on:click={() => showdetails(order.id)}>
                   View Details
                 </button>
               </td>
@@ -135,8 +162,7 @@
                 <button
                   type="button"
                   class="btn waves-effect waves-light"
-                  on:click={toggleUpdateStatus}
-                >
+                  on:click={toggleUpdateStatus}>
                   <i class="fa fa-ellipsis-v" aria-hidden="true" />
                 </button>
               </td>
@@ -154,8 +180,7 @@
   autoFocus={true}
   centered
   on:click={hidedetails}
-  data-toggle="modal"
->
+  data-toggle="modal">
   <div class="modal-content border-bottom-0">
     <div class="modal-header">
       <h5 class="modal-title">Claim Details</h5>
@@ -164,8 +189,7 @@
         class="btn-close"
         on:click={hidedetails}
         data-bs-dismiss="modal"
-        aria-label="Close"
-      />
+        aria-label="Close" />
     </div>
 
     <ModalBody>
@@ -173,14 +197,13 @@
         <div class="row">
           <div class="col-sm">
             <p class="">
-              Claim ID: <span class="text-primary">{selectedOrder.claimId}</span
-              >
+              Claim ID: <span class="text-primary">{selectedOrder.id}</span>
             </p>
           </div>
           <div class="col-sm">
             <p class="">
               Application Date:{" "}
-              <span class="text-primary">{selectedOrder.ApplicationDate}</span>
+              <span class="text-primary">{selectedOrder.applicationDate}</span>
             </p>
           </div>
         </div>
@@ -190,13 +213,13 @@
           <div class="col-sm">
             <p>
               Claimant Name:{" "}
-              <span class="text-primary">{selectedOrder.ClaimantName}</span>
+              <span class="text-primary">{selectedOrder.name}</span>
             </p>
           </div>
           <div class="col-sm">
             <p class="">
               Claim Type:{" "}
-              <span class="text-primary">{selectedOrder.ClaimType}</span>
+              <span class="text-primary">{selectedOrder.claimType}</span>
             </p>
           </div>
         </div>
@@ -206,13 +229,13 @@
           <div class="col-sm">
             <p class="">
               Event Name:{" "}
-              <span class="text-primary">{selectedOrder.EventName}</span>
+              <span class="text-primary">{selectedOrder.eventName}</span>
             </p>
           </div>
           <div class="col-sm">
             <p class="">
               Event Date:{" "}
-              <span class="text-primary">{selectedOrder.EventDate}</span>
+              <span class="text-primary">{selectedOrder.eventDate}</span>
             </p>
           </div>
         </div>
@@ -222,7 +245,7 @@
           <div class="col-sm">
             <p class="">
               Amount:{" "}
-              <span class="text-primary">{selectedOrder.Total}</span>
+              <span class="text-primary">{selectedOrder.totalAmount}</span>
             </p>
           </div>
           <div class="col-sm">
@@ -231,17 +254,14 @@
               <div class="row">
                 <div class="col-4">
                   <p>
-                    <label for="formrow-firstname-input" class="form-label"
-                      >Status</label
-                    >
+                    <label for="formrow-firstname-input" class="form-label">Status</label>
                   </p>
                 </div>
                 <div class="col-sm">
                   <select class="form-select">
-                    <option selected hidden>Select</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Paid">Paid</option>
-                    <option value="Rejected">Rejected</option>
+                    {#each claim_status as stat}
+                      <option selected={selectedOrder.status == stat} value={stat}>{stat}</option>
+                    {/each}
                   </select>
                 </div>
               </div>
@@ -263,12 +283,12 @@
             </tr>
           </thead>
           <tbody>
-            {#each selectedOrder.particulars as particulars}
+            {#each selectedOrder.expenses as expense}
               <tr>
-                <th scope="row">{particulars.id}</th>
-                <td>{particulars.item}</td>
-                <td>{particulars.amount}</td>
-                <td><a href={particulars.digitalReceipt}>View Doc</a></td>
+                <th scope="row">{expense.id}</th>
+                <td>{expense.item}</td>
+                <td>{expense.amount}</td>
+                <td><a href={expense.doc_url}>View Doc</a></td>
               </tr>
             {/each}
           </tbody>
@@ -289,8 +309,7 @@
   autoFocus={true}
   data-toggle="modal"
   centered
-  on:click={toggleUpdateStatus}
->
+  on:click={toggleUpdateStatus}>
   <div class="modal-content border-bottom-0">
     <div class="modal-header">
       <h5 class="modal-title">Update Status</h5>
@@ -299,8 +318,7 @@
         class="btn-close"
         on:click={toggleUpdateStatus}
         data-bs-dismiss="modal"
-        aria-label="Close"
-      />
+        aria-label="Close" />
     </div>
 
     <ModalBody>

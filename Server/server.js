@@ -2,7 +2,7 @@ require("dotenv").config()
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const { addClaim, claim_status } = require('./db/database');
+const { addClaim, claim_status, getClaims, getExpenses } = require('./db/database');
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 5000;
@@ -31,11 +31,21 @@ app.get('/', (req, res) => {
 
 app.post('/claim', (req, res) => {
   const { claim, expenses } = req.body;
+  claim.applicationDate = 
   claim.totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0) - claim.lessAdvanceExpense;
   claim.status = claim_status.pending;
   addClaim(claim, expenses);
   res.send('Claim added');
 });
+
+app.get('/claims', (req, res) => {
+  getClaims().then(claims => res.send(claims));
+});
+
+app.get('/expenses/:claimId', (req, res) => {
+  getExpenses(req.params.claimId).then(expenses => res.send(expenses));
+});
+
 
 app.post('/upload', upload.single('file'), (req, res) => {
   // return url to file
