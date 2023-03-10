@@ -11,14 +11,13 @@
   addMessages("en", en);
 
   init({
-    fallbackLocale: 'en',
-    initialLocale: "en", 
+    fallbackLocale: "en",
+    initialLocale: "en",
   });
 
   if (!localStorage.getItem("authUser")) {
     navigate("/login");
   }
-
 </script>
 
 <Router {url}>
@@ -30,9 +29,15 @@
 
   {#each data.authProtectedRoutes as route}
     <Route path={route.path} let:params>
-      <Layout>
-        <svelte:component this={route.component} />
-      </Layout>
+      {#if !localStorage.getItem("authUser")}
+        <script>
+          navigate("/login");
+        </script>
+      {:else}
+        <Layout>
+          <svelte:component this={route.component} />
+        </Layout>
+      {/if}
     </Route>
   {/each}
 </Router>
