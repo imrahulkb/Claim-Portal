@@ -1,7 +1,7 @@
 <script>
 	import { auth } from '../../helpers/firebase';
 	import { navigate } from 'svelte-routing';
-	import { user } from '../../helpers/store.ts';
+	import { user } from '../../helpers/store';
     import { Container, Row, Col, Card, CardBody,Button} from 'sveltestrap';
     import { Link } from 'svelte-routing';
 
@@ -19,7 +19,7 @@
 			
 			user.set({ ...$user, loggedIn: true, email });
 			
-			navigate('/');
+			navigate('/dashboard');
 		}
 	};
 
