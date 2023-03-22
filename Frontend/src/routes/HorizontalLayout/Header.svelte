@@ -15,7 +15,7 @@
         <img src="assets/images/IEEE-BS-Logo.png" id="logo" alt="IEEE-BS-Logo" />
     </Link>
 
-    <h1 id="Title">Claim Portal</h1>
+    <h1 id="Title" class="mb-0 text-dark">Claim Portal</h1>
 
     <div class="d-flex">
       <ProfileMenu />
