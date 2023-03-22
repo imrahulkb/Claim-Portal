@@ -61,6 +61,8 @@
     "google-maps": "^4.3.3",
     "gridjs": "^5.1.0",
     "gridjs-svelte": "^2.1.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "moment": "^2.29.1",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.32.12",

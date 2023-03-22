@@ -15,9 +15,9 @@
     initialLocale: "en",
   });
 
-  if (!localStorage.getItem("authUser")) {
-    navigate("/login");
-  }
+  // if (!localStorage.getItem("authUser")) {
+  //   navigate("/login");
+  // }
 </script>
 
 <Router {url}>
@@ -31,7 +31,7 @@
     <Route path={route.path} let:params>
       {#if !localStorage.getItem("authUser")}
         <script>
-          navigate("/login");
+          window.location.replace("/login");
         </script>
       {:else}
         <Layout>

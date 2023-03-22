@@ -13,16 +13,59 @@
 
   let orders = [];
 
-  fetch("api/claims")
-    .then((res) => res.json())
-    .then((res) => {
-      orders = res;
-      orders.forEach((order) => {
-        order.expenses = [];
-      });
-    });
+  // fetch("api/claims")
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     orders = res;
+  //     orders.forEach((order) => {
+  //       order.expenses = [];
+  //     });
+  //   });
 
-  $: console.log(orders);
+  // $: console.log(orders);
+
+  orders = [
+    {
+      id: 6,
+      name: "Hannan Satopay",
+      email: "hannan.satopay@ieee.org",
+      mobile: "9969297408",
+      event: {
+        name: "Career Development Program",
+        type: "Expense Claim",
+        total: 1000,
+        advance: 0,
+        gross: 1000
+      },
+      bank: {
+        name: "Hannan Satopay",
+        number: "123456789",
+        ifsc: "ABCD1234",
+        bank: "HDFC Bank",
+        branch: "Mahim"
+      },
+      bills: [{
+        id: 1,
+        date: '27/02/2022',
+        details: 'Home to Institute',
+        type: 'Travelling Expenses',
+        amount: 500,
+        receipt: 'https://www.google.com'
+      },
+      {
+        id: 2,
+        date: '27/02/2022',
+        details: 'Institute to Home',
+        type: 'Travelling Expenses',
+        amount: 500,
+        receipt: 'https://www.google.com'
+      }],
+      submitted: "11/03/2023",
+      status: "Pending"
+    }
+  ]
+
+  let status;
 
   const badgeclass = (status) => {
     switch (status) {
@@ -44,14 +87,16 @@
   const hidedetails = () => (showDetailsModal = false);
 
   const showdetails = (orderId) => {
-    fetch("api/expenses/" + orderId)
-      .then((res) => res.json())
-      .then((res) => {
-        let order = orders.find((o) => o.id === orderId);
-        order.expenses = res;
-        selectedOrder = order;
-        showDetailsModal = true;
-      });
+    // fetch("api/expenses/" + orderId)
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     let order = orders.find((o) => o.id === orderId);
+    //     order.expenses = res;
+    //     selectedOrder = order;
+    //     showDetailsModal = true;
+    //   });
+    selectedOrder = orders[0];
+    showDetailsModal = true;
   };
 
   let showUpdateStatusModal = false;
@@ -106,12 +151,11 @@
             </th>
             <th class="align-middle">Claim ID</th>
             <th class="align-middle">Claimant Name</th>
-            <th class="align-middle">Application Date</th>
             <th class="align-middle">Event Name</th>
-            <th class="align-middle">EventDate</th>
+            <th class="align-middle">Claim Date</th>
+            <th class="align-middle">Type</th>
             <th class="align-middle">Total</th>
             <th class="align-middle">Status</th>
-            <th class="align-middle">View Details</th>
             <th class="align-middle">Action</th>
           </tr>
         </thead>
@@ -132,16 +176,16 @@
               <td><a href="/" class="text-body fw-bold">{order.id}</a> </td>
               <td>{order.name}</td>
               <td>
-                {order.applicationDate}
+                {order.submitted}
               </td>
               <td>
-                {order.eventName}
+                {order.event.name}
               </td>
               <td>
-                {order.eventDate}
+                {order.event.type}
               </td>
               <td>
-                {order.totalExpense}
+                {order.event.gross}
               </td>
               <td>
                 <span
@@ -150,20 +194,17 @@
                     " font-size-11"}>{order.status}</span>
               </td>
               <td>
-                <!-- Button trigger modal -->
                 <button
                   type="button"
-                  class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
+                  class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light"
                   on:click={() => showdetails(order.id)}>
-                  View Details
+                  View
                 </button>
-              </td>
-              <td>
                 <button
                   type="button"
-                  class="btn waves-effect waves-light"
+                  class="btn btn-primary btn-sm btn-rounded waves-effect waves-light ms-2"
                   on:click={toggleUpdateStatus}>
-                  <i class="fa fa-ellipsis-v" aria-hidden="true" />
+                  Update
                 </button>
               </td>
             </tr>
@@ -202,8 +243,8 @@
           </div>
           <div class="col-sm">
             <p class="">
-              Application Date:{" "}
-              <span class="text-primary">{selectedOrder.applicationDate}</span>
+              Submitted Date:{" "}
+              <span class="text-primary">{selectedOrder.submitted}</span>
             </p>
           </div>
         </div>
@@ -219,7 +260,7 @@
           <div class="col-sm">
             <p class="">
               Claim Type:{" "}
-              <span class="text-primary">{selectedOrder.claimType}</span>
+              <span class="text-primary">{selectedOrder.event.type}</span>
             </p>
           </div>
         </div>
@@ -229,44 +270,30 @@
           <div class="col-sm">
             <p class="">
               Event Name:{" "}
-              <span class="text-primary">{selectedOrder.eventName}</span>
+              <span class="text-primary">{selectedOrder.event.name}</span>
             </p>
           </div>
-          <div class="col-sm">
+          <!-- <div class="col-sm">
             <p class="">
               Event Date:{" "}
               <span class="text-primary">{selectedOrder.eventDate}</span>
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="container">
         <div class="row">
           <div class="col-sm">
             <p class="">
-              Amount:{" "}
-              <span class="text-primary">{selectedOrder.totalAmount}</span>
+              Amount:
+              <span class="text-primary">{selectedOrder.event.gross}</span>
             </p>
           </div>
           <div class="col-sm">
-            <p />
-            <div class="container">
-              <div class="row">
-                <div class="col-4">
-                  <p>
-                    <label for="formrow-firstname-input" class="form-label">Status</label>
-                  </p>
-                </div>
-                <div class="col-sm">
-                  <select class="form-select">
-                    {#each claim_status as stat}
-                      <option selected={selectedOrder.status == stat} value={stat}>{stat}</option>
-                    {/each}
-                  </select>
-                </div>
-              </div>
-            </div>
-            <!-- </p> -->
+            <p class="">
+              Status:
+              <span class="text-primary">{selectedOrder.status}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -276,19 +303,21 @@
         <Table class="table align-middle table-nowrap">
           <thead>
             <tr>
-              <th scope="col">Serial No.</th>
+              <th scope="col">Sr.</th>
+              <th scope="col">Date</th>
               <th scope="col">Particulars</th>
               <th scope="col">Amount</th>
-              <th scope="col">Digital Receipt</th>
+              <th scope="col">Receipt</th>
             </tr>
           </thead>
           <tbody>
-            {#each selectedOrder.expenses as expense}
+            {#each selectedOrder.bills as bill}
               <tr>
-                <th scope="row">{expense.id}</th>
-                <td>{expense.item}</td>
-                <td>{expense.amount}</td>
-                <td><a href={expense.doc_url}>View Doc</a></td>
+                <th scope="row">{bill.id}</th>
+                <td>{bill.date}</td>
+                <td>{bill.details}</td>
+                <td>{bill.amount}</td>
+                <td><a href={bill.receipt} target="_blank" rel='noreferrer'>View Doc</a></td>
               </tr>
             {/each}
           </tbody>
@@ -324,12 +353,15 @@
     <ModalBody>
       <div class="mb-3">
         <label for="formrow-firstname-input" class="form-label">Status</label>
-        <select class="form-select">
-          <option selected hidden>Open this select menu</option>
-          <option value="Pending">Pending</option>
-          <option value="Paid">Paid</option>
-          <option value="Rejected">Rejected</option>
+        <select class="form-select" bind:value={status}>
+          <option selected hidden>Select status</option>
+          <option value="received">Bills received</option>
+          <option value="paid">Payment made</option>
+          <option value="rejected">Rejected</option>
         </select>
+        {#if status === "rejected"}
+          <input class="form-control mt-3" type="text" placeholder="Comments"/>
+        {/if}
       </div>
     </ModalBody>
     <ModalFooter>

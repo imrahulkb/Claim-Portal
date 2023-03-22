@@ -15,26 +15,32 @@
   } from "sveltestrap";
 	import { Link } from 'svelte-routing';
 
-	let email = 'admin@themesbrand.com';
-	let password = '123456';
+	// let email = 'admin';
+	// let password = 'password';
+
+	let email = null;
+	let password = null;
 
 	// Destructuring to obtain email and password from form via Event
 	const handleLoginForm = () => {
-		auth.signInWithEmailAndPassword(email, password)
-			.then(function (result) {
-				let firebaseUser = auth.currentUser;
+		// auth.signInWithEmailAndPassword(email, password)
+		// 	.then(function (result) {
+		// 		let firebaseUser = auth.currentUser;
 
-				if (firebaseUser) {
+		// 		if (firebaseUser) {
 
-					let { email } = firebaseUser;
+		// 			let { email } = firebaseUser;
 
-					user.set({ ...$user, loggedIn: true, email });
+		// 			user.set({ ...$user, loggedIn: true, email });
 
-					navigate('/dashboard');
-				}
+		// 			navigate('/dashboard');
+		// 		}
 				
-			})
-			.catch((error) => alert(error.message));
+		// 	})
+		// 	.catch((error) => alert(error.message));
+		user.set({ loggedIn: true, email });
+		localStorage.setItem("authUser", JSON.stringify(user))
+		navigate('/dashboard');
 	};
 </script>
 
@@ -53,7 +59,7 @@
 				<Col class="col-7">
 				  <div class="text-primary p-4">
 					<h5 class="text-primary">Welcome Back !</h5>
-					<p>Sign in to continue to Skote.</p>
+					<p>Sign in to continue.</p>
 				  </div>
 				</Col>
 				<Col class="col-5 align-self-end">
@@ -83,10 +89,10 @@
 				  <div class="avatar-md profile-user-wid mb-4">
 					<span class="avatar-title rounded-circle bg-light">
 					  <img
-						src="assets/images/logo.svg"
+						src="assets/images/favicon.png"
 						alt=""
 						class="rounded-circle"
-						height="34"
+						height="44"
 					  />
 					</span>
 				  </div>
@@ -95,7 +101,7 @@
 			  <div class="p-2">
 				<div class="form-horizontal">
 				  <div class="mb-3">
-					<Label for="email" class="form-label">Email</Label>
+					<Label for="email" class="form-label">Username</Label>
 					<Input
 					  type="text"
 					  class="form-control"
@@ -123,7 +129,7 @@
 					</div>
 				  </div>
   
-				  <div class="form-check">
+				  <!-- <div class="form-check">
 					<input
 					  class="form-check-input"
 					  type="checkbox"
@@ -132,7 +138,7 @@
 					<Label class="form-check-label" for="remember-check">
 					  Remember me
 					</Label>
-				  </div>
+				  </div> -->
   
 				  <div class="mt-3 d-grid">
 					<button
@@ -141,7 +147,7 @@
 					>
 				  </div>
   
-				  <div class="mt-4 text-center">
+				  <!-- <div class="mt-4 text-center">
 					<h5 class="font-size-14 mb-3">Sign in with</h5>
   
 					<ul class="list-inline">
@@ -170,28 +176,28 @@
 						</a>
 					  </li>
 					</ul>
-				  </div>
+				  </div> -->
   
-				  <div class="mt-4 text-center">
+				  <!-- <div class="mt-4 text-center">
 					<Link to="auth-recoverpw" class="text-muted"
 					  ><i class="mdi mdi-lock me-1" /> Forgot your password?</Link
 					>
-				  </div>
+				  </div> -->
 				</div>
 			  </div>
 			</CardBody>
 		  </Card>
 		  <div class="mt-5 text-center">
-			<p>
+			<!-- <p>
 			  Don&apos;t have an account ?{" "}
 			  <Link to="register" class="fw-medium text-primary">
 				{" "}
 				Signup now{" "}
 			  </Link>{" "}
-			</p>
+			</p> -->
 			<p>
-			  © {new Date().getFullYear()} Skote. Crafted with{" "}
-			  <i class="mdi mdi-heart text-danger" /> by Themesbrand
+			  Crafted with{" "}
+			  <i class="mdi mdi-heart text-danger" /> by Website & Social Media Committee 2023
 			</p>
 		  </div>
 		</Col>
