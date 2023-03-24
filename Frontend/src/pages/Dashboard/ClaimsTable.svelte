@@ -317,7 +317,7 @@
                 <td>{bill.date}</td>
                 <td>{bill.details}</td>
                 <td>{bill.amount}</td>
-                <td><a href={bill.receipt} target="_blank">View Doc</a></td>
+                <td><a href={bill.receipt} target="_blank" rel='noreferrer'>View Doc</a></td>
               </tr>
             {/each}
           </tbody>
