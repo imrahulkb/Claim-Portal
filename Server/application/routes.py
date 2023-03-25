@@ -1,6 +1,6 @@
 from flask import current_app as app
 from flask import request
-from .models import db, Claim, Expense #, Advance, Honorarium, ConferenceDeposit, StudentBranchRebate
+from .models import db, Claim, Expense, Advance, Honorarium, ConferenceDeposit, StudentBranchRebate
 
 
 @app.route('/api/claims', methods=['GET'])

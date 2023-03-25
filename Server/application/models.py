@@ -1,39 +1,5 @@
 from . import db
 
-# USE claims;
-
-# CREATE TABLE claim (
-#   name varchar(255) NOT NULL,
-#   phone varchar(15) NOT NULL,
-#   email varchar(255) NOT NULL,
-#   ieeeMembership varchar(255) NOT NULL,
-#   claimType varchar(255) NOT NULL,
-#   eventName varchar(255) NOT NULL,
-#   eventDate date NOT NULL,
-#   lessAdvanceExpense int NOT NULL,
-#   totalExpense int NOT NULL,
-#   status Enum('pending', 'approved', 'rejected') NOT NULL,
-#   accountName varchar(255) NOT NULL,
-#   accountNumber varchar(255) NOT NULL,
-#   bankName varchar(255) NOT NULL,
-#   branchName varchar(255) NOT NULL,
-#   ifscCode varchar(11) NOT NULL,
-#   PRIMARY KEY (id)
-# );
-
-# CREATE TABLE expense (
-#   id int NOT NULL AUTO_INCREMENT,
-#   claim_id int NOT NULL,
-#   item varchar(255) NOT NULL,
-#   amount int NOT NULL,
-#   doc_url varchar(255) NOT NULL,
-#   PRIMARY KEY (id),
-#   FOREIGN KEY (claim_id) REFERENCES claim(id)
-# );
-
-
-# DO NOT MODIFY THIS FILE unless you're using an empty test database during development
-
 CLAIM_TYPES = [
     'Expense',
     'Advance',
@@ -131,21 +97,21 @@ class Expense(db.Model):
         }
 
 
-# class Advance(db.Model):
-#     # TODO: Add fields
-#     pass
+class Advance(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # TODO: Add fields
 
 
-# class Honorarium(db.Model):
-#     # TODO: Add fields
-#     pass
+class Honorarium(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # TODO: Add fields
 
 
-# class ConferenceDeposit(db.Model):
-#     # TODO: Add fields
-#     pass
+class ConferenceDeposit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # TODO: Add fields
 
 
-# class StudentBranchRebate(db.Model):
-#     # TODO: Add fields
-#     pass
+class StudentBranchRebate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # TODO: Add fields
