@@ -28,6 +28,16 @@
   let activeTab = 1;
   let pdf;
   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+  let ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+  function validateIFSC(ifsc) {
+    return ifscRegex.test(ifsc);
+  }
+
+  function validatePAN(pan) {
+    return panRegex.test(pan);
+  }
 
   function toggleTab(tab) {
     activeTab = tab;
@@ -86,8 +96,8 @@
       case 1:
         if (
           claimantDetails.name &&
-          claimantDetails.name &&
-          emailRegex.test(claimantDetails.email)
+          claimantDetails.email &&
+          emailRegex.test(claimantDetails.email) && claimantDetails.event.type
         ) {
           tabState = true;
         } else {
@@ -98,7 +108,19 @@
         tabState = true;
         break;
       case 3:
-        tabState = true;
+        if(
+          claimantDetails.bank.name &&
+          claimantDetails.bank.bank &&
+          claimantDetails.bank.branch &&
+          claimantDetails.bank.ifsc &&
+          claimantDetails.bank.number && validateIFSC(claimantDetails.bank.ifsc)
+        )
+        {
+          tabState = true;
+        }
+        else{
+          tabState = false;
+        }
         break;
       case 4:
         tabState = true;
@@ -810,6 +832,11 @@
                           <Label>PAN</Label>
                           <Input
                             type="text"
+                            valid={claimantDetails.bank.pan &&
+                              validatePAN(claimantDetails.bank.pan)}
+                            invalid={claimantDetails.bank.pan != null &&
+                              !validatePAN(claimantDetails.bank.pan)}
+                            feedback="PAN is required & formatted correctly"
                             bind:value={claimantDetails.bank.pan}
                           />
                         </Col>
@@ -820,6 +847,11 @@
                         <Label>IFSC Code</Label>
                         <Input
                           type="text"
+                          valid={claimantDetails.bank.ifsc &&
+                            validateIFSC(claimantDetails.bank.ifsc)}
+                          invalid={claimantDetails.bank.ifsc != null &&
+                            !validateIFSC(claimantDetails.bank.ifsc)}
+                          feedback="IFSC is required & formatted correctly"
                           bind:value={claimantDetails.bank.ifsc}
                         />
                       </Col>
@@ -851,7 +883,7 @@
                       src={pdf}
                       style="width: 100%; height: 500px; margin: 0px; padding: 0px;"
                       frameborder="0"
-                      framemargin="0"
+                      title="ifr"
                     />
                   </TabPane>
                 </TabContent>
