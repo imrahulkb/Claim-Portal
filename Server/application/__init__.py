@@ -1,8 +1,5 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
-
-db = SQLAlchemy()
+from .models import db
 
 def create_app():
     """Initialize the core application."""
