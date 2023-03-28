@@ -7,23 +7,25 @@ from .models import db, Claim, Expense, Advance, Honorarium, ConferenceDeposit, 
 def get_claims():
     return {'claims': [claim.to_json() for claim in Claim.query.all()]}
 
+
 @app.route('/api/claims', methods=['POST'])
 def create_claim():
     data = request.get_json()
-    
-    #get particulars
+
+    # get particulars
     particulars = data.pop('particulars')
 
-    #create and add claim to get claim id
+    # create and add claim to get claim id
     claim = Claim(**data)
     db.session.add(claim)
     db.session.commit()
-    
+
+    assert claim.id is not None # claim id should be set
+
     # add claim id to particulars and add particulars
-    particulars = particulars.map(lambda p: {
-        'claim_id': claim.id,
-        **p
-    })
+    particulars = particulars.map(
+        lambda p: p.update({'claim_id': claim.id}).to_json())
+
     if claim.claimType == 'Expense':
         particulars = particulars.map(lambda p: Expense(**p))
     elif claim.claimType == 'Advance':
@@ -36,10 +38,13 @@ def create_claim():
         particulars = particulars.map(lambda p: StudentBranchRebate(**p))
     else:
         raise Exception('Invalid claim type')
+
     particulars = particulars.map(lambda p: db.session.add(p))
-    
+
     db.session.commit()
+
     return {'claim': claim.to_json()}
+
 
 @app.route('/api/claims/<int:claim_id>', methods=['GET'])
 def get_claim(claim_id):
