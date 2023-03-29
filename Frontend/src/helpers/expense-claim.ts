@@ -41,7 +41,7 @@ function generateNew(claimantDetails) {
     const doc = new jsPDF();
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
-    doc.text(73, 19, "Expenses Claim Form");
+    doc.text(73, 19, " "+claimantDetails.event.type);
     doc.addImage(imgData, "PNG", 13, 5, 43, 17.2);
     doc.setFontSize(12);
 
@@ -1123,7 +1123,7 @@ export function generateHonorariumClaim(claimantDetails) {
     //table 4
     doc.text(16, 153, "Account Details for disbursement of Amount:");
     var tableData4 = [
-        [1, "Account Name", ""],
+        [1, "Account Name", claimantDetails.bank.name],
         [2, "Account No", ""],
         [3, "Bank Name ", ""],
         [4, "Branch Name", ""],

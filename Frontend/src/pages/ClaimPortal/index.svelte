@@ -219,20 +219,16 @@
     };
     files = null;
     idIncrement++;
-    calculate();
   }
 
   function handleRemoveFields(id) {
     bills = bills.filter(function (value, index, arr) {
       if (value.id != id) return value;
     });
-    calculate();
   }
 
-  function calculate() {
-    claimantDetails.event.total = bills.reduce((n, { amount }) => n + amount, 0);
-    claimantDetails.event.gross = claimantDetails.event.total - claimantDetails.event.advance;
-  }
+  $: claimantDetails.event.total = bills.reduce((n, { amount }) => n + amount, 0);
+  $: claimantDetails.event.gross = claimantDetails.event.total - claimantDetails.event.advance;
 </script>
 
 <div class="page-content">
@@ -425,6 +421,7 @@
                                       color="success"
                                       block
                                       on:click={handleAddFields}
+                                      disabled={!(receipt.amount && receipt.date && receipt.details && receipt.type )}
                                     >
                                       Add
                                     </Button>
@@ -515,7 +512,11 @@
                       </div>
                       <div class="form-group mb-3">
                         <label>Less Advance Expense</label>
-                        <Input type="number" bind:value={claimantDetails.event.advance} on:input={calculate}/>
+                        <Input type="number" bind:value={claimantDetails.event.advance} 
+                        valid={claimantDetails.event.advance &&
+                          claimantDetails.event.advance <= claimantDetails.event.total}
+                        invalid={ claimantDetails.event.advance > claimantDetails.event.total}/>
+                          
                       </div>
                       <div class="form-group">
                         <label>Gross Total</label>
@@ -851,7 +852,7 @@
                             validateIFSC(claimantDetails.bank.ifsc)}
                           invalid={claimantDetails.bank.ifsc != null &&
                             !validateIFSC(claimantDetails.bank.ifsc)}
-                          feedback="IFSC is required & formatted correctly"
+                          feedback="IFSC is required & formatted correctly. Alphabets shoould be capital"
                           bind:value={claimantDetails.bank.ifsc}
                         />
                       </Col>
