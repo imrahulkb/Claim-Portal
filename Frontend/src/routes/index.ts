@@ -25,11 +25,11 @@ import Login from "../pages/Authentication/Login.svelte";
 // Dashboard
 import Dashboard from "../pages/Dashboard/index.svelte";
 
-//Pages
-// import PagesMaintenance from "../pages/Utility/pages-maintenance.svelte";
-// import PagesComingsoon from "../pages/Utility/pages-comingsoon.svelte";
-// import Pages404 from "../pages/Utility/pages-404.svelte";
-// import Pages500 from "../pages/Utility/pages-500.svelte";
+// Pages
+import PagesMaintenance from "../pages/Utility/pages-maintenance.svelte";
+import PagesComingsoon from "../pages/Utility/pages-comingsoon.svelte";
+import Pages404 from "../pages/Utility/pages-404.svelte";
+import Pages500 from "../pages/Utility/pages-500.svelte";
 
 const authProtectedRoutes = [
   // { path: "/", component: Dashboard},
@@ -45,10 +45,10 @@ const publicRoutes = [
   { path: "/login", component: Login },
   // { path: "/register", component: Register },
 
-  // { path: "/pages-maintenance", component: PagesMaintenance },
-  // { path: "/pages-comingsoon", component: PagesComingsoon },
-  // { path: "/pages-404", component: Pages404 },
-  // { path: "/pages-500", component: Pages500 },
+  { path: "/pages-maintenance", component: PagesMaintenance },
+  { path: "/pages-comingsoon", component: PagesComingsoon },
+  { path: "/pages-404", component: Pages404 },
+  { path: "/pages-500", component: Pages500 },
 
   // Authentication Inner
   // { path: "/auth-login", component: Login1 },
