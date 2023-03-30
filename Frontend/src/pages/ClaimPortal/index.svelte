@@ -51,7 +51,7 @@
         case "Advance Claim":
           pdf = generateAdvanceClaim(claimantDetails);
           break;
-        case "Award Of Honorium":
+        case "Award Of Honorarium":
           pdf = generateHonorariumClaim(claimantDetails);
           break;
         case "Conference Deposit":
@@ -329,8 +329,8 @@
                           bind:value={claimantDetails.event.type}>
                           <option value="Expense Claim">Expense Claim</option>
                           <option value="Advance Claim">Advance Claim</option>
-                          <option value="Award Of Honorium"
-                            >Award Of Honorium</option>
+                          <option value="Award Of Honorarium"
+                            >Award Of Honorarium</option>
                           <option value="Conference Deposit"
                             >Conference Deposit</option>
                           <option value="Student Branch Rebate"
@@ -605,7 +605,7 @@
                             disabled />
                         </div>
                       </div>
-                    {:else if claimantDetails.event.type == "Award Of Honorium"}
+                    {:else if claimantDetails.event.type == "Award Of Honorarium"}
                       <div>
                         <table style="width: 100%">
                           <tbody>
@@ -812,7 +812,7 @@
                           type="text"
                           bind:value={claimantDetails.bank.number} />
                       </Col>
-                      {#if claimantDetails.event.type == "Award Of Honorium"}
+                      {#if claimantDetails.event.type == "Award Of Honorarium"}
                         <Col class="mb-3">
                           <Label>PAN</Label>
                           <Input
