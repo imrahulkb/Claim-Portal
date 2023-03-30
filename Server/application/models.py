@@ -1,4 +1,6 @@
-from . import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 CLAIM_TYPES = [
     'Expense',
@@ -115,3 +117,17 @@ class ConferenceDeposit(db.Model):
 class StudentBranchRebate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # TODO: Add fields
+
+
+if __name__ == '__main__':
+    import os
+    from flask import Flask
+    from dotenv import load_dotenv
+    load_dotenv()
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
+        print('Tables created')
+    

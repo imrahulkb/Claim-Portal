@@ -1,0 +1,89 @@
+{
+  "note": "This file is for reference only, and should be updated as more details are decided upon. Its not part of any code",
+
+  "/api": {
+    "/claims-GET": ["claim","claim","claim","..."],
+    "/claim-POST": "claim",
+    "/claim/<id>-GET": "claim with details",
+    "comment-1": "Should there be query params for filtering claims?"
+  },
+  "claim": {
+    "id": "string",
+    "name": "string",
+    "phone": "string",
+    "email": "string",
+    "ieeeMembership": "string",
+    "claimType": "Expense Claim | Advance Claim | Award of Honorarium | Conference Deposit | Student Branch Rebate",
+    "eventName": "string",
+    "eventDate": "Date",
+    "lessAdvanceExpense": "number",
+    "status": "pending | approved | rejected",
+    "accountName": "string",
+    "accountNumber": "string",
+    "bankName": "string",
+    "branchName": "string",
+    "ifscCode": "XXXX0111111",
+    "if claimType is Expense Claim": {
+      "expenses": [
+        "expense",
+        "expense",
+        "expense",
+        "..."
+      ],
+      "totalExpense": "number"
+    },
+    "if claimType is Advance Claim": {
+      "advanceDetails": "advanceDetails",
+      "totalAdvance": "number"
+    },
+    "if claimType is Award of Honorarium": {
+      "honorariumDate": "Date",
+      "honorariumDetails": "string",
+      "honorariumAmount": "number"
+    },
+    "if claimType is Conference Deposit": {
+      "conferenceName": "string",
+      "conferenceDate": "Date",
+      "conferenceAmount": "number",
+      "conferenceDetails": "string",
+      "numberOfPapersReceived": "number",
+      "numberOfPapersAccepted": "number",
+      "numberOfPapersPresented": "number",
+      "numberOfPapersPublished": "number",
+      "IEEEXplorePublicationDate": "Date",
+      "IEEEXplorePublicationLink": "string",
+      "DepositPaymentDate": "Date",
+      "DepositPaymentAmount": "number",
+      "TransactionId/ChequeNumber": "string",
+      "AccountHolderName": "string",
+      "StudentBranchCounselorName": "string",
+      "ConferenceChairName": "string",
+      "Principal/DirectorName": "string"
+    },
+    "if claimType is Student Branch Rebate": {
+      "Code": "string",
+      "StudentMembershipNumber": "number",
+      "ProfessionalMembershipNumber": "number",
+      "NumberOfEventsReported(viaVtools)": "number",
+      "DescriptionOfFunds": "string?? This is a number field in the form",
+      "Amount": "number",
+      "StudentBranchCounselorName": "string",
+      "Principal/DirectorName": "string"
+    },
+    "expense": {
+      "id": "string",
+      "claimId": "string",
+      "expenseType": "Travelling Expenses | Food and Beverages | Lodging and Boarding | Printing, Stationary and Consumables | Miscellaneous",
+      "expenseDate": "Date",
+      "expenseAmount": "number",
+      "documentUrl": "string"
+    },
+    "advanceDetails": {
+      "id": "string",
+      "claimId": "string",
+      "advanceAmount": "number",
+      "advanceDate": "Date",
+      "documentUrl": "string"
+    }
+  }
+}
