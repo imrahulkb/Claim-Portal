@@ -1,14 +1,14 @@
-from flask import current_app as app
-from flask import request
+from flask import request, Blueprint
 from .models import db, Claim, Expense, Advance, Honorarium, ConferenceDeposit, StudentBranchRebate
 
+api = Blueprint('api', __name__, url_prefix='/api')
 
-@app.route('/api/claims', methods=['GET'])
+@api.route('/claims', methods=['GET'])
 def get_claims():
     return {'claims': [claim.to_json() for claim in Claim.query.all()]}
 
 
-@app.route('/api/claims', methods=['POST'])
+@api.route('/claim', methods=['POST'])
 def create_claim():
     data = request.get_json()
 
@@ -46,7 +46,7 @@ def create_claim():
     return {'claim': claim.to_json()}
 
 
-@app.route('/api/claims/<int:claim_id>', methods=['GET'])
+@api.route('/claim/<int:claim_id>', methods=['GET'])
 def get_claim(claim_id):
     claim = Claim.query.get(claim_id)
     return {'claim': claim.to_json()}
