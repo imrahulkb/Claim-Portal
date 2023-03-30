@@ -227,12 +227,8 @@
     });
   }
 
-  $: claimantDetails.event.total = bills.reduce(
-    (sum, { amount }) => sum + amount,
-    0
-  );
-  $: claimantDetails.event.gross =
-    claimantDetails.event.total - claimantDetails.event.advance;
+  $: claimantDetails.event.total = bills.reduce((n, { amount }) => n + amount, 0);
+  $: claimantDetails.event.gross = claimantDetails.event.total - claimantDetails.event.advance;
 </script>
 
 <div class="page-content">

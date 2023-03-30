@@ -41,7 +41,7 @@ function generateNew(claimantDetails) {
     const doc = new jsPDF();
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
-    doc.text(73, 19, "Expenses Claim Form");
+    doc.text(73, 19, " "+claimantDetails.event.type);
     doc.addImage(imgData, "PNG", 13, 5, 43, 17.2);
     doc.setFontSize(12);
 
@@ -336,11 +336,11 @@ export function generateStudentBranchRebate(claimantDetails) {
     //table 4
     doc.text(16, 123, "Account Details for disbursement of Amount:");
     var tableData4 = [
-        [1, "Account Name", ""],
-        [2, "Account No", ""],
-        [3, "Bank Name ", ""],
-        [4, "Branch Name", ""],
-        [5, "IFSC Code", ""]
+        [1, "Account Name", claimantDetails.bank.name],
+        [2, "Account No", claimantDetails.bank.number],
+        [3, "Bank Name ", claimantDetails.bank.bank],
+        [4, "Branch Name", claimantDetails.bank.branch],
+        [5, "IFSC Code", claimantDetails.bank.ifsc]
     ];
 
     var tableOptions4 = {
@@ -574,11 +574,11 @@ export function generateAdvanceClaim(claimantDetails) {
     //table 3
     doc.text(16, 123, "Account Details for disbursement of Amount:");
     var tableData3 = [
-        [1, "Account Name", ""],
-        [2, "Account No", ""],
-        [3, "Bank Name ", ""],
-        [4, "Branch Name", ""],
-        [5, "IFSC Code", ""]
+        [1, "Account Name", claimantDetails.bank.name],
+        [2, "Account No", claimantDetails.bank.number],
+        [3, "Bank Name ", claimantDetails.bank.bank],
+        [4, "Branch Name", claimantDetails.bank.branch],
+        [5, "IFSC Code", claimantDetails.bank.ifsc]
     ];
 
     var tableOptions3 = {
@@ -866,11 +866,11 @@ export function generateConferenceClaim(claimantDetails) {
     //table 4
     doc.text(16, 144, "Account Details for disbursement of Amount:");
     var tableData4 = [
-        [1, "Account Name", ""],
-        [2, "Account No", ""],
-        [3, "Bank Name ", ""],
-        [4, "Branch Name", ""],
-        [5, "IFSC Code", ""]
+        [1, "Account Name", claimantDetails.bank.name],
+        [2, "Account No", claimantDetails.bank.number],
+        [3, "Bank Name ", claimantDetails.bank.bank],
+        [4, "Branch Name", claimantDetails.bank.branch],
+        [5, "IFSC Code", claimantDetails.bank.ifsc]
     ];
 
     var tableOptions4 = {
@@ -1123,13 +1123,13 @@ export function generateHonorariumClaim(claimantDetails) {
     //table 4
     doc.text(16, 153, "Account Details for disbursement of Amount:");
     var tableData4 = [
-        [1, "Account Name", ""],
-        [2, "Account No", ""],
-        [3, "Bank Name ", ""],
-        [4, "Branch Name", ""],
-        [5, "IFSC Code", ""],
-        [6, "PAN (11 digits)", ""],
-        [7, "Email Address", ""]
+        [1, "Account Name", claimantDetails.bank.name],
+        [2, "Account No", claimantDetails.bank.number],
+        [3, "Bank Name ", claimantDetails.bank.bank],
+        [4, "Branch Name", claimantDetails.bank.branch],
+        [5, "IFSC Code", claimantDetails.bank.ifsc],
+        [6, "PAN (11 digits)", claimantDetails.bank.pan],
+        [7, "Email Address", claimantDetails.bank.email]
     ];
 
     var tableOptions4 = {
